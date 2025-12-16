@@ -1,0 +1,65 @@
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: never
+    include-exception: false
+
+spring:
+  application:
+    name: api-first-integration-hub
+  
+  # Security Configuration (OAuth2 Resource Server)
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${JWT_ISSUER_URI:https://auth.fidelity.com/realms/integration}
+          jwk-set-uri: ${JWT_JWK_SET_URI:https://auth.fidelity.com/realms/integration/protocol/openid-connect/certs}
+
+# Actuator Configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when-authorized
+      probes:
+        enabled: true
+
+# OpenAPI/Swagger Configuration
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    operations-sorter: method
+    tags-sorter: alpha
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+
+# Integration Hub Configuration
+integration:
+  hub:
+    # Provider adapter timeouts (milliseconds)
+    oms:
+      timeout: 5000
+      retry:
+        max-attempts: 3
+        backoff-delay: 1000
+    vendor:
+      timeout: 3000
+      retry:
+        max-attempts: 2
+        backoff-delay: 500
+    # Correlation ID configuration
+    correlation:
+      header-name: X-Correlation-ID
+    # API versioning
+    api:
+      version: v1
+      base-path: /api/v1
