@@ -84,22 +84,41 @@ The application will start on `http://localhost:8080`
 
 ### Configuration
 
-Configuration is in `src/main/resources/application.yml`:
+Configuration is in `src/main/resources/application.yml`.
+
+#### Local/dev mode (default)
+
+By default the app runs with auth **disabled** so you can hit endpoints without a real IdP:
 
 ```yaml
-server:
-  port: 8080
+integration:
+  hub:
+    security:
+      enabled: false
+```
 
+#### Production mode (OAuth2 JWT)
+
+Enable security and provide your IdP settings (recommended via env vars or your deployment config):
+
+```yaml
+integration:
+  hub:
+    security:
+      enabled: true
+```
+
+Then configure Spring Security OAuth2 resource server properties in your deployment (example):
+
+```yaml
 spring:
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${JWT_ISSUER_URI:https://auth.fidelity.com/realms/integration}
-          jwk-set-uri: ${JWT_JWK_SET_URI:https://auth.fidelity.com/realms/integration/protocol/openid-connect/certs}
+          issuer-uri: https://your-idp.example/realms/integration
+          jwk-set-uri: https://your-idp.example/realms/integration/protocol/openid-connect/certs
 ```
-
-For local development without authentication, you can modify `SecurityConfig` to permit all requests (not recommended for production).
 
 ## API Documentation
 

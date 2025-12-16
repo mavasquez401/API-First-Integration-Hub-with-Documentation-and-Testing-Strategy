@@ -167,12 +167,10 @@ Contract.make {
 Test-specific configuration is in `src/test/resources/application-test.yml`:
 
 ```yaml
-spring:
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:8080/auth/test
+integration:
+  hub:
+    security:
+      enabled: false
 
 logging:
   level:

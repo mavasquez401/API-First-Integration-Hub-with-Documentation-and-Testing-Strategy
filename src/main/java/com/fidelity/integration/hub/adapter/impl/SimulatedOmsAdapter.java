@@ -88,6 +88,15 @@ public class SimulatedOmsAdapter implements OmsAdapter {
     }
 
     @Override
+    public Account getAccountById(String accountId) {
+        // Simulate OMS lookup - in production, this would be an HTTP/DB call
+        return MOCK_ACCOUNTS.stream()
+            .filter(account -> account.getAccountId().equals(accountId))
+            .findFirst()
+            .orElse(null);
+    }
+
+    @Override
     public List<Account> getAccountsByClient(String clientId) {
         // Simulate OMS lookup - in production, this would be an HTTP/DB call
         return MOCK_ACCOUNTS.stream()

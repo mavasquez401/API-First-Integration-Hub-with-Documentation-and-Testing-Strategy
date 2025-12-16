@@ -42,18 +42,3 @@ public record ErrorResponseDto(
     @Schema(description = "Additional metadata about the error")
     Map<String, Object> metadata
 ) {}
-
-/**
- * Violation DTO for field-level validation errors.
- */
-@Schema(description = "Field-level validation violation")
-public record ViolationDto(
-    @Schema(description = "Field name that failed validation", example = "accountStatus")
-    String field,
-    
-    @Schema(description = "Error message", example = "must be one of [ACTIVE, CLOSED, PENDING, SUSPENDED, DORMANT]")
-    String message,
-    
-    @Schema(description = "Rejected value", example = "INVALID_STATUS")
-    Object rejectedValue
-) {}

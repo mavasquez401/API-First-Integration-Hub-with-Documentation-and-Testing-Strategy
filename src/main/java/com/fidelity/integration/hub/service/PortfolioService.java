@@ -36,12 +36,15 @@ public class PortfolioService {
      * @return Portfolio DTO with positions and valuations
      */
     public PortfolioDto getPortfolioByAccount(String accountId) {
+        // Validate account exists (distinguish \"no positions\" from \"unknown account\")
+        // In production, this would likely be a dedicated OMS call with proper caching/retries.
+        if (omsAdapter.getAccountById(accountId) == null) {
+            throw new ResourceNotFoundException("Account not found: " + accountId);
+        }
+
         // Fetch positions from OMS
         List<com.fidelity.integration.hub.adapter.domain.Position> positions = omsAdapter.getPositionsByAccount(accountId);
-        
-        // In production, validate that account exists first
-        // For now, empty positions is acceptable (account exists but has no positions)
-        
+
         // Enrich with market data
         List<PositionDto> enrichedPositions = positions.stream()
             .map(position -> enrichPosition(position))

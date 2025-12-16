@@ -20,6 +20,14 @@ import java.util.List;
 public interface OmsAdapter {
 
     /**
+     * Retrieves a single account by accountId.
+     *
+     * @param accountId Account identifier
+     * @return Account if found, otherwise null
+     */
+    Account getAccountById(String accountId);
+
+    /**
      * Retrieves all accounts for a given client.
      * 
      * @param clientId Client identifier

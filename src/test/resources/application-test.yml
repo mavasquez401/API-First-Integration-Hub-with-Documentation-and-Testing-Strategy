@@ -1,11 +1,9 @@
 # Test profile configuration
-spring:
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          # Disable JWT validation for tests (use mock security)
-          issuer-uri: http://localhost:8080/auth/test
+integration:
+  hub:
+    security:
+      # Disable JWT for tests; controller tests use @WithMockUser.
+      enabled: false
 
 logging:
   level:

@@ -9,14 +9,6 @@ server:
 spring:
   application:
     name: api-first-integration-hub
-  
-  # Security Configuration (OAuth2 Resource Server)
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: ${JWT_ISSUER_URI:https://auth.fidelity.com/realms/integration}
-          jwk-set-uri: ${JWT_JWK_SET_URI:https://auth.fidelity.com/realms/integration/protocol/openid-connect/certs}
 
 # Actuator Configuration
 management:
@@ -45,6 +37,12 @@ springdoc:
 # Integration Hub Configuration
 integration:
   hub:
+    # Security toggle.
+    # - false: local/dev friendly (no JWT required)
+    # - true: production mode (OAuth2 JWT resource server)
+    security:
+      enabled: false
+
     # Provider adapter timeouts (milliseconds)
     oms:
       timeout: 5000

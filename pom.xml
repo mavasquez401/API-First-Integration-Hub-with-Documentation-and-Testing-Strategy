@@ -58,12 +58,6 @@
             <version>${springdoc.version}</version>
         </dependency>
 
-        <!-- Problem Details (RFC7807) Support -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
-        </dependency>
-
         <!-- Lombok for reducing boilerplate -->
         <dependency>
             <groupId>org.projectlombok</groupId>
